@@ -15,7 +15,6 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-
 interface AuthStore {
   isAuth: boolean;
   accessToken: string | null;
@@ -23,6 +22,7 @@ interface AuthStore {
   refreshToken: string | null;
   user: User | null;
   accessTokenExpiration: number | null;
+  isLoading: boolean;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   initAuthListener: () => void;
@@ -33,8 +33,8 @@ export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: null,
   refreshToken: null,
   user: null,
-
   accessTokenExpiration: null,
+  isLoading: true,
 
   login: async (email: string, password: string) => {
     try {
@@ -48,23 +48,23 @@ export const useAuthStore = create<AuthStore>((set) => ({
         user,
         refreshToken: user.refreshToken || null,
         accessTokenExpiration: null,
+        isLoading: false,
       });
 
       return true;
     } catch (error) {
       console.error('Login failed:', error);
+
       return false;
     }
-
   },
 
-
   logout: async () => {
+
     try {
       await auth.signOut();
 
       set({
-
         isAuth: false,
         accessToken: null,
         user: null,
@@ -77,16 +77,37 @@ export const useAuthStore = create<AuthStore>((set) => ({
   },
 
   initAuthListener: () => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+
       if (user) {
-        const token = await user.getIdToken();
-        set({
-          isAuth: true,
-          accessToken: token,
-          user,
-          refreshToken: user.refreshToken || null,
-          accessTokenExpiration: null,
-        });
+        try {
+
+          const token = await user.getIdToken();
+
+          set({
+            isAuth: true,
+            accessToken: token,
+
+            user,
+            refreshToken: user.refreshToken || null,
+            accessTokenExpiration: null,
+            isLoading: false,
+
+          });
+        } catch (error) {
+          console.error('Failed to get token:', error);
+
+          set({
+            isAuth: false,
+            accessToken: null,
+            user: null,
+            refreshToken: null,
+
+            accessTokenExpiration: null,
+            isLoading: false,
+
+          });
+        }
       } else {
         set({
           isAuth: false,
@@ -94,9 +115,12 @@ export const useAuthStore = create<AuthStore>((set) => ({
           user: null,
           refreshToken: null,
           accessTokenExpiration: null,
+          isLoading: false,
         });
       }
     });
 
+    // Return unsubscribe function for cleanup if needed
+    return unsubscribe;
   },
 }));

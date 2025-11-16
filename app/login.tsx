@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/store/authStore';
-import { Alert, Text, StyleSheet, View, TextInput } from 'react-native';
+import { Text, StyleSheet, View, TextInput } from 'react-native';
 
 import Button from '@/components/Button';
 import { useState } from 'react';
