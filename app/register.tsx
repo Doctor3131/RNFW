@@ -1,11 +1,11 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function RegisterScreen() {
   return (
     <View style={styles.container}>
       <Text>Register Screen</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -13,5 +13,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }
-})
+  },
+});

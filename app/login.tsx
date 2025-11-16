@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/store/authStore';
-import { Text, StyleSheet, View, TextInput } from 'react-native';
+import { Alert, Text, StyleSheet, View, TextInput } from 'react-native';
 
 import Button from '@/components/Button';
 import { useState } from 'react';
@@ -9,8 +9,12 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const { login } = useAuthStore();
 
-  const handleLogin = () => {
-    login();
+  const handleLogin = async () => {
+    const success = await login(username, password);
+
+    if (!success) {
+      alert('Login Failed Invalid username or password');
+    }
   };
 
   return (
@@ -30,7 +34,7 @@ export default function LoginScreen() {
         </View>
 
         <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 3 }]}>
-          <Button label='Sign In' onPress={() => { handleLogin(); alert(`welcome ${username}`); }} />
+          <Button label='Sign In' onPress={handleLogin} />
         </View>
 
       </View>
