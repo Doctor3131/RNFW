@@ -21,7 +21,7 @@ export default function LoginScreen() {
     <View style={styles.container}>
       <View style={styles.containerLogin}>
 
-        <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 3 }]}>
+        <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 2 }]}>
           <Text style={styles.headerLogin}>Login</Text>
         </View>
 
@@ -33,7 +33,7 @@ export default function LoginScreen() {
           <TextInput placeholder='password' secureTextEntry style={styles.input} value={password} onChangeText={setPassword} />
         </View>
 
-        <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 3 }]}>
+        <View style={[{ alignItems: 'center', alignContent: 'center', flex: 1 / 2 }]}>
           <Button label='Sign In' onPress={handleLogin} />
         </View>
 
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerLogin: {
-    width: 400,
-    height: 300,
+    width: 300,
+    height: 360,
     borderWidth: 1,
     justifyContent: 'center',
   },
@@ -58,14 +58,16 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 40,
     fontWeight: 'bold',
+    alignContent: 'center',
+    padding: 10,
   },
   subContainerLogin: {
     flex: 1,
-    padding: 20,
+    padding: 12,
   },
   input: {
     borderWidth: 1,
-    marginBottom: 10,
+    margin: 10,
     padding: 10,
   },
 });
