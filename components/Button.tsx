@@ -18,5 +18,6 @@ export default function Button({ label, onPress }: Props) {
 const styles = StyleSheet.create({
   label: {
     textDecorationLine: 'underline',
+    padding: 10,
   },
 });

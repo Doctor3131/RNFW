@@ -1,6 +1,5 @@
 import { useAuthStore } from '@/store/authStore';
-import { Text, StyleSheet, View, TextInput } from 'react-native';
-
+import { Text, StyleSheet, View, TextInput, ScrollView } from 'react-native';
 import Button from '@/components/Button';
 import { useState } from 'react';
 
@@ -18,54 +17,85 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.containerLogin}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.card}>
 
-        <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 3 }]}>
-          <Text style={styles.headerLogin}>Login</Text>
-        </View>
+        <Text style={styles.headerLogin}>Login</Text>
 
-        <View style={styles.subContainerLogin}>
+        <View style={styles.form}>
           <Text>Username</Text>
-          <TextInput placeholder='username' style={styles.input} value={username} onChangeText={setUsername} />
+          <TextInput
+            placeholder="username"
+            style={styles.input}
+            value={username}
+            onChangeText={setUsername}
+          />
 
           <Text>Password</Text>
-          <TextInput placeholder='password' secureTextEntry style={styles.input} value={password} onChangeText={setPassword} />
+          <TextInput
+            placeholder="password"
+            secureTextEntry
+            style={styles.input}
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
 
-        <View style={[styles.subContainerLogin, { alignItems: 'center', flex: 1 / 3 }]}>
-          <Button label='Sign In' onPress={handleLogin} />
+        <View style={styles.buttonContainer}>
+          <Button label="Sign in" onPress={handleLogin} />
+          <Button label="Sign up" onPress={() => alert('you pressed the button')} />
         </View>
 
       </View>
-    </View >
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-  },
-  containerLogin: {
-    width: 400,
-    height: 300,
-    borderWidth: 1,
-    justifyContent: 'center',
-  },
-  headerLogin: {
-    flex: 1,
-    fontSize: 40,
-    fontWeight: 'bold',
-  },
-  subContainerLogin: {
-    flex: 1,
     padding: 20,
+    // backgroundColor: '#f5f6fa',
   },
+
+  card: {
+    width: '100%',
+    // backgroundColor: '#fff',
+    // borderRadius: 12,
+    padding: 25,
+    borderWidth: 1,
+    borderColor: '#000',
+
+    // shadow Android
+    // elevation: 4,
+
+    // shadow iOS
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // shadowRadius: 6,
+  },
+
+  headerLogin: {
+    fontSize: 34,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 25,
+  },
+
+  form: {
+    marginBottom: 25,
+  },
+
   input: {
     borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
+    borderColor: '#000',
+    padding: 12,
+    // borderRadius: 8,
+    marginBottom: 15,
+  },
+
+  buttonContainer: {
+    alignItems: 'center',
   },
 });
